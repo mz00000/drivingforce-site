@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ArrowRight,
   Mail,
@@ -10,6 +10,72 @@ import {
 } from 'lucide-react';
 
 const DrivingForceWebsite = () => {
+  // Language (EN/JA)
+  const [lang, setLang] = useState('en');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('preferredLanguage');
+    if (saved === 'en' || saved === 'ja') setLang(saved);
+  }, []);
+
+  const switchLanguage = (nextLang) => {
+    setLang(nextLang);
+    localStorage.setItem('preferredLanguage', nextLang);
+  };
+
+  const t = {
+    navContact: lang === 'en' ? 'Contact Us' : 'お問い合わせ',
+    heroTitle:
+      lang === 'en'
+        ? 'The Driving Force for Your Global Business.'
+        : '世界ビジネスへの推進力を、\nUAEから。',
+    heroLead:
+      lang === 'en'
+        ? 'Accelerating innovation and trade from UAE to the World.'
+        : 'イノベーション、戦略的貿易、そして投資。\nUAE to the World — UAEを拠点に、貴社のグローバル展開を加速させます。',
+    heroPrimary: lang === 'en' ? 'Get in Touch' : 'お問い合わせ',
+    heroSecondary: lang === 'en' ? "Founder's Vision" : '創業者のビジョン',
+
+    trackRecordKicker: lang === 'en' ? 'Track Record' : '実績',
+    trackRecordTitle:
+      lang === 'en'
+        ? 'Backed by & Collaborated with Industry Leaders'
+        : '業界をリードする企業との協業・実績',
+
+    leadershipKicker: lang === 'en' ? 'Leadership' : 'リーダーシップ',
+    founderRole: lang === 'en' ? 'Founder / CEO' : '創業者 / CEO',
+    viewLinkedIn: lang === 'en' ? 'View LinkedIn' : 'LinkedInを見る',
+    readInterviews: lang === 'en' ? 'Read Interviews' : 'インタビューを見る',
+
+    whatWeDoKicker: lang === 'en' ? 'What We Do' : '事業内容',
+    expertiseTitle: lang === 'en' ? 'Our Expertise' : '私たちの強み',
+    expertiseLead:
+      lang === 'en'
+        ? 'Comprehensive solutions for global business acceleration'
+        : 'グローバル展開を加速するための包括的な支援',
+
+    contactKicker: lang === 'en' ? 'Get In Touch' : 'お問い合わせ',
+    contactTitle:
+      lang === 'en'
+        ? "Let's Build Something Great Together"
+        : '共に、素晴らしい未来をつくりましょう',
+    contactLead:
+      lang === 'en'
+        ? "Whether you're looking to expand into new markets, develop innovative solutions, or accelerate your business growth, we're here to help."
+        : '新市場への展開、プロダクト開発、事業成長の加速など、目的に応じて最適な形で支援します。',
+
+    formName: lang === 'en' ? 'Name' : 'お名前',
+    formEmail: lang === 'en' ? 'Email' : 'メールアドレス',
+    formSubject: lang === 'en' ? 'Subject' : '件名',
+    formMessage: lang === 'en' ? 'Message' : 'お問い合わせ内容',
+    formSend: lang === 'en' ? 'Send Message' : '送信',
+
+    footerTagline:
+      lang === 'en'
+        ? 'Accelerating Global Business'
+        : 'UAEから世界へ、グローバルビジネスを加速させます。',
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,7 +85,7 @@ const DrivingForceWebsite = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('お問い合わせありがとうございます。近日中にご連絡いたします。');
+    alert(lang === 'en' ? 'Thank you for your message.' : 'お問い合わせありがとうございます。近日中にご連絡いたします。');
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
@@ -42,23 +108,39 @@ const DrivingForceWebsite = () => {
   const services = [
     {
       icon: <Globe className="w-8 h-8" />,
-      title: 'Strategic Trading',
+      title: lang === 'en' ? 'Strategic Trading' : '戦略的トレーディング',
       description:
-        "Middle East import/export hub & supply chain strategy. Leveraging Dubai's strategic position to connect global markets.",
+        lang === 'en'
+          ? "Middle East import/export hub & supply chain strategy. Leveraging Dubai's strategic position to connect global markets."
+          : '中東の輸出入拠点・サプライチェーン戦略。ドバイの地政学的優位を活かし、グローバル市場をつなぎます。',
     },
     {
       icon: <Lightbulb className="w-8 h-8" />,
-      title: 'Digital Innovation',
+      title: lang === 'en' ? 'Digital Innovation' : 'デジタル・イノベーション',
       description:
-        'SaaS development (Readable, Bakuage), AI integration, and product incubation. Building scalable technology solutions.',
+        lang === 'en'
+          ? 'SaaS development (Readable, Bakuage), AI integration, and product incubation. Building scalable technology solutions.'
+          : 'SaaS開発（Readable / Bakuage）、AI統合、プロダクトのインキュベーション。スケールする技術基盤を構築します。',
     },
     {
       icon: <TrendingUp className="w-8 h-8" />,
-      title: 'Investment & Consulting',
+      title: lang === 'en' ? 'Investment & Consulting' : '投資・コンサルティング',
       description:
-        'New business development, UAE market entry, and venture investment. Strategic guidance for global expansion.',
+        lang === 'en'
+          ? 'New business development, UAE market entry, and venture investment. Strategic guidance for global expansion.'
+          : '新規事業開発、UAE市場参入、ベンチャー投資。グローバル展開のための戦略を伴走します。',
     },
   ];
+
+  // Hero subtle dotted pattern (React版)
+  const heroPatternStyle = {
+    backgroundColor: '#ffffff',
+    backgroundImage:
+      'radial-gradient(rgba(30, 58, 138, 0.25) 0.5px, transparent 0.5px), radial-gradient(rgba(30, 58, 138, 0.25) 0.5px, #ffffff 0.5px)',
+    backgroundSize: '20px 20px',
+    backgroundPosition: '0 0, 10px 10px',
+    opacity: 0.10,
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -70,39 +152,77 @@ const DrivingForceWebsite = () => {
               DRIVINGFORCE
             </div>
 
-            <a
-              href="#contact"
-              className="px-6 py-2.5 bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition-colors text-sm font-medium"
-            >
-              Contact Us
-            </a>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+                <button
+                  type="button"
+                  onClick={() => switchLanguage('en')}
+                  className={[
+                    'px-3 py-1.5 text-sm font-medium rounded transition-all',
+                    lang === 'en'
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-600 hover:text-gray-900',
+                  ].join(' ')}
+                  aria-pressed={lang === 'en'}
+                >
+                  EN
+                </button>
+                <button
+                  type="button"
+                  onClick={() => switchLanguage('ja')}
+                  className={[
+                    'px-3 py-1.5 text-sm font-medium rounded transition-all',
+                    lang === 'ja'
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-600 hover:text-gray-900',
+                  ].join(' ')}
+                  aria-pressed={lang === 'ja'}
+                >
+                  日本語
+                </button>
+              </div>
+
+              <a
+                href="#contact"
+                className="px-6 py-2.5 bg-gray-900 text-white rounded-sm hover:bg-gray-800 transition-colors text-sm font-medium"
+              >
+                {t.navContact}
+              </a>
+            </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-20 right-0 w-96 h-96 bg-blue-50 rounded-full filter blur-3xl opacity-30" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gray-50 rounded-full filter blur-3xl opacity-40" />
-        </div>
+        {/* dotted pattern overlay */}
+        <div className="absolute inset-0 -z-10" style={heroPatternStyle} />
 
         <div className="max-w-7xl mx-auto">
           <div className="max-w-4xl">
-            <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-6">
-              The Driving Force for Your Global Business.
+            <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-6 whitespace-pre-line">
+              {t.heroTitle}
             </h1>
-            <p className="text-xl lg:text-2xl text-gray-600 mb-10 leading-relaxed">
-              Accelerating innovation and trade from Dubai to the World.
+            <p className="text-xl lg:text-2xl text-gray-600 mb-10 leading-relaxed whitespace-pre-line">
+              {t.heroLead}
             </p>
 
-            <a
-              href="#contact"
-              className="inline-flex items-center px-8 py-4 bg-gray-900 text-white rounded-sm hover:bg-gray-800 transition-colors text-lg font-medium group"
-            >
-              Contact Us
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a
+                href="#contact"
+                className="inline-flex items-center justify-center px-8 py-4 bg-gray-900 text-white rounded-sm hover:bg-gray-800 transition-colors text-lg font-medium group"
+              >
+                {t.heroPrimary}
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+
+              <a
+                href="#about"
+                className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 border border-gray-200 rounded-sm hover:bg-gray-50 transition-colors text-lg font-medium"
+              >
+                {t.heroSecondary}
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -112,10 +232,10 @@ const DrivingForceWebsite = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-sm font-semibold text-blue-600 mb-3 tracking-wide uppercase">
-              Track Record
+              {t.trackRecordKicker}
             </p>
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-              Backed by & Collaborated with Industry Leaders
+              {t.trackRecordTitle}
             </h2>
           </div>
 
@@ -138,14 +258,14 @@ const DrivingForceWebsite = () => {
       </section>
 
       {/* About Founder Section */}
-      <section className="py-20 lg:py-32 px-6 lg:px-8">
+      <section id="about" className="py-20 lg:py-32 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="order-2 lg:order-1">
               <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-sm overflow-hidden">
                 <div className="w-full h-full flex items-center justify-center text-gray-400">
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4" />
+                    <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4"></div>
                     <p className="text-sm">Professional Photo</p>
                   </div>
                 </div>
@@ -154,18 +274,17 @@ const DrivingForceWebsite = () => {
 
             <div className="order-1 lg:order-2">
               <p className="text-sm font-semibold text-blue-600 mb-3 tracking-wide uppercase">
-                Leadership
+                {t.leadershipKicker}
               </p>
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
                 Tomo Kamei
               </h2>
-              <p className="text-xl text-gray-600 mb-8">Founder / CEO</p>
+              <p className="text-xl text-gray-600 mb-8">{t.founderRole}</p>
 
               <p className="text-lg text-gray-700 leading-relaxed mb-8">
-                A serial entrepreneur and investor with a proven track record. Co-founder of
-                Tokyo Otaku Mode (acquired by Shogakukan). Developed and scaled SaaS products
-                like Readable and Bakuage (AI mastering). Combining engineering expertise with
-                global business strategy.
+                {lang === 'en'
+                  ? 'A serial entrepreneur and investor with a proven track record. Co-founder of Tokyo Otaku Mode (acquired by Shogakukan). Developed and scaled SaaS products like Readable and Bakuage (AI mastering). Combining engineering expertise with global business strategy.'
+                  : '起業家・投資家として豊富な実績を持ち、Tokyo Otaku Modeを共同創業し小学館へのExitを実現。ReadableやBakuage（AI Mastering）などのSaaSを開発・拡大し、技術と事業を横断してグローバル戦略を推進します。'}
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -176,14 +295,14 @@ const DrivingForceWebsite = () => {
                   className="inline-flex items-center px-6 py-3 border-2 border-gray-900 text-gray-900 rounded-sm hover:bg-gray-900 hover:text-white transition-colors font-medium"
                 >
                   <Linkedin className="w-5 h-5 mr-2" />
-                  View LinkedIn
+                  {t.viewLinkedIn}
                 </a>
 
                 <a
                   href="#"
                   className="inline-flex items-center px-6 py-3 text-gray-700 hover:text-gray-900 transition-colors font-medium group"
                 >
-                  Read Interviews
+                  {t.readInterviews}
                   <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
@@ -197,13 +316,13 @@ const DrivingForceWebsite = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-sm font-semibold text-blue-600 mb-3 tracking-wide uppercase">
-              What We Do
+              {t.whatWeDoKicker}
             </p>
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Our Expertise
+              {t.expertiseTitle}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Comprehensive solutions for global business acceleration
+              {t.expertiseLead}
             </p>
           </div>
 
@@ -216,8 +335,12 @@ const DrivingForceWebsite = () => {
                 <div className="w-16 h-16 bg-blue-50 rounded-sm flex items-center justify-center mb-6 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                   {service.icon}
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{service.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {service.description}
+                </p>
               </div>
             ))}
           </div>
@@ -230,14 +353,13 @@ const DrivingForceWebsite = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             <div>
               <p className="text-sm font-semibold text-blue-600 mb-3 tracking-wide uppercase">
-                Get In Touch
+                {t.contactKicker}
               </p>
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-                Let's Build Something Great Together
+                {t.contactTitle}
               </h2>
-              <p className="text-lg text-gray-600 mb-12">
-                Whether you're looking to expand into new markets, develop innovative solutions,
-                or accelerate your business growth, we're here to help.
+              <p className="text-lg text-gray-600 mb-12 whitespace-pre-line">
+                {t.contactLead}
               </p>
 
               <div className="space-y-6">
@@ -258,7 +380,7 @@ const DrivingForceWebsite = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold text-gray-900 mb-2">
-                    Name *
+                    {t.formName} *
                   </label>
                   <input
                     type="text"
@@ -272,11 +394,8 @@ const DrivingForceWebsite = () => {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-semibold text-gray-900 mb-2"
-                  >
-                    Email *
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
+                    {t.formEmail} *
                   </label>
                   <input
                     type="email"
@@ -290,11 +409,8 @@ const DrivingForceWebsite = () => {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-sm font-semibold text-gray-900 mb-2"
-                  >
-                    Subject *
+                  <label htmlFor="subject" className="block text-sm font-semibold text-gray-900 mb-2">
+                    {t.formSubject} *
                   </label>
                   <input
                     type="text"
@@ -308,11 +424,8 @@ const DrivingForceWebsite = () => {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-semibold text-gray-900 mb-2"
-                  >
-                    Message *
+                  <label htmlFor="message" className="block text-sm font-semibold text-gray-900 mb-2">
+                    {t.formMessage} *
                   </label>
                   <textarea
                     id="message"
@@ -329,7 +442,7 @@ const DrivingForceWebsite = () => {
                   type="submit"
                   className="w-full px-8 py-4 bg-gray-900 text-white rounded-sm hover:bg-gray-800 transition-colors text-lg font-medium"
                 >
-                  Send Message
+                  {t.formSend}
                 </button>
               </form>
             </div>
@@ -343,9 +456,11 @@ const DrivingForceWebsite = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
               <div className="text-2xl font-bold mb-2">DRIVINGFORCE</div>
-              <p className="text-gray-400">Accelerating Global Business</p>
+              <p className="text-gray-400">{t.footerTagline}</p>
             </div>
-            <div className="text-gray-400 text-sm">© 2025 DRIVINGFORCE - FZCO. All rights reserved.</div>
+            <div className="text-gray-400 text-sm">
+              © 2025 DRIVINGFORCE - FZCO. All rights reserved.
+            </div>
           </div>
         </div>
       </footer>
